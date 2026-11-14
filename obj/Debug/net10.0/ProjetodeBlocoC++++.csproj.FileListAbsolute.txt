@@ -1,0 +1,14 @@
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ProjetodeBlocoC++++.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ProjetodeBlocoC++++.AssemblyInfoInputs.cache
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ProjetodeBlocoC++++.AssemblyInfo.cs
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ProjetodeBlocoC++++.csproj.CoreCompileInputs.cache
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\bin\Debug\net10.0\ProjetodeBlocoC++++.exe
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\bin\Debug\net10.0\ProjetodeBlocoC++++.deps.json
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\bin\Debug\net10.0\ProjetodeBlocoC++++.runtimeconfig.json
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\bin\Debug\net10.0\ProjetodeBlocoC++++.dll
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\bin\Debug\net10.0\ProjetodeBlocoC++++.pdb
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ProjetodeBlocoC++++.dll
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\refint\ProjetodeBlocoC++++.dll
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ProjetodeBlocoC++++.pdb
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ProjetodeBlocoC++++.genruntimeconfig.cache
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ref\ProjetodeBlocoC++++.dll
