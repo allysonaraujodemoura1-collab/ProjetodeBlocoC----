@@ -12,3 +12,4 @@ C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\refint\Projet
 C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ProjetodeBlocoC++++.pdb
 C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ProjetodeBlocoC++++.genruntimeconfig.cache
 C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ref\ProjetodeBlocoC++++.dll
+C:\Users\User\projeto-do-aly\ProjetodeBlocoC++++\obj\Debug\net10.0\ProjetodeBlocoC++++.sourcelink.json

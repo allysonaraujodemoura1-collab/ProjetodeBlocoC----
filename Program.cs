@@ -91,8 +91,22 @@ public class Program
                             Console.WriteLine("Qual a espécie do animal?");
                             animal.Especie = Console.ReadLine()??"";
                             
-                            Console.WriteLine("Qual a idade do animal?");
-                            animal.Idade = int.Parse(Console.ReadLine() ?? "0");
+                            int idadeAnimal;
+                            bool idadeValida;
+                            
+                            do
+                            {
+                                Console.WriteLine("Qual a idade do animal?");
+
+                                idadeValida = int.TryParse(Console.ReadLine(), out idadeAnimal );
+
+                                if (!idadeValida || idadeAnimal < 0 || idadeAnimal > 50 )
+                                {
+                                    Console.WriteLine("Erro: informe uma idade válida entre 0 e 50 anos");
+                                }
+                            }while (!idadeValida || idadeAnimal < 0 || idadeAnimal > 50);
+
+                            animal.Idade= idadeAnimal;
 
                             //Verificação de cadastro do animal
 
@@ -119,7 +133,7 @@ public class Program
 
                             break;
 
-                        case 2 :
+                        case 2:
                         // aqui armazena tudo sobre o veterinario
                             Veterinario veterinario = new Veterinario();
 
@@ -147,6 +161,8 @@ public class Program
                             
                                 Console.WriteLine($"Total de veterinários cadastrados: {Veterinarios.Count}");
                             }
+                            break;
+                            
                         case 3:
                             Consulta consulta = new Consulta(); // acessa informações sobre a consulta 
                             Console.WriteLine("Observações");
