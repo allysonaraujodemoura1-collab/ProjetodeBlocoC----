@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Generic; // armazena e organiza dados
+using System.Linq; // consulta e filtra dados
 
 public class Program
 {
@@ -19,10 +20,6 @@ public class Program
         Console.WriteLine();
         Console.Write("    Login: "); 
         string loginRecepcionista = Console.ReadLine()??"";
-        
-        //Console.Write(  "    Senha: "); 
-        //string senhaRecepcionista = Console.ReadLine()??"";
-
         Console.WriteLine();
         Console.WriteLine("Cadastro feito com sucesso!:");
         Console.WriteLine();
@@ -36,7 +33,7 @@ public class Program
             Console.WriteLine();
             Console.WriteLine("    1 - Recepcionista"); // so recebe informações e acessa, so agenda e cancela consultas e cadastra animais e veterinários
             Console.WriteLine("    2 - Veterinário"); // so realiza consulta, registra observações e acessa os agendamentos                                       
-            Console.WriteLine("    0 - Encerrar o programa");
+            Console.WriteLine("    0 - Encerrar o programa"); //encerra o programa, por não ter um banco de dados tambem apaga tudo
             Console.WriteLine();
 
             Console.Write(  "Opção escolhida: "); 
@@ -59,6 +56,7 @@ public class Program
                     Console.WriteLine("4 - Agendar consulta");
                     Console.WriteLine("5 - Cancelar consulta");
                     Console.WriteLine("0 - Voltar ao menu principal");
+                    
                     //guarda a opção do recepcionista
                     byte opcaoRecepcionista;
                         
@@ -71,6 +69,7 @@ public class Program
                         case 1:
                             // Aqui vai armazenar tudo sobre o animal e vai entrar na lista
                             
+                            //gera um ID aleatorio pra cada animal
                             Random gerador = new Random();
                             int idAnimal;
                             do
@@ -79,18 +78,69 @@ public class Program
                             }while (Animais.Exists(a => a.Id== idAnimal));
                             Animal animal = new Animal(idAnimal);
                             
-                            Console.WriteLine("Qual o telefone do tutor?");
-                            animal.TelefoneTutor = Console.ReadLine()??"";
+                            //valida o Número digitado
+                            do
+                            {
+                                Console.WriteLine("Qual o telefone do tutor? (DDD + número)");
+                                animal.TelefoneTutor = (Console.ReadLine()??"").Trim();
+
+                                if (animal.TelefoneTutor.Length != 11 && animal.TelefoneTutor.Length != 10 || !animal.TelefoneTutor.All(char.IsDigit))
+                                {Console.WriteLine("Erro: ");}
+                                // .All verifica se todas as condiçoes foram atendidas
+
+                            }while(animal.TelefoneTutor.Length != 11 && animal.TelefoneTutor.Length != 10 || !animal.TelefoneTutor.All(char.IsDigit));
                             
-                            Console.WriteLine("Qual o nome do tutor?");
-                            animal.NomeTutor = Console.ReadLine()??"";
+                            //valida o Nome do tutor
+
+                            do
+                            {
+                                Console.WriteLine("Qual o nome do tutor?");
+                                animal.NomeTutor = (Console.ReadLine()??"").Trim();
+
+                                if(string.IsNullOrWhiteSpace(animal.NomeTutor) || animal.NomeTutor.Any(char.IsDigit)) // o .Any verifica se atendeu uma das exigencias
+                                {Console.WriteLine("Erro: informe um nome válido, sem números");} 
+                                
+                            }while(string.IsNullOrWhiteSpace(animal.NomeTutor) || animal.NomeTutor.Any(char.IsDigit));
+
+                            //Valida o nome do animal
                             
-                            Console.WriteLine("Qual o nome do animal?");
-                            animal.Nome = Console.ReadLine()??"";
+                            do
+                            { 
+                                Console.WriteLine("Qual o nome do animal?");
+                                animal.Nome = (Console.ReadLine()??"").Trim();
+
+                                if(string.IsNullOrWhiteSpace(animal.Nome) || animal.Nome.Any(char.IsDigit)) 
+                                {Console.WriteLine("Erro: informe um nome válido, sem números");} 
+                                
+                            }while(string.IsNullOrWhiteSpace(animal.Nome) || animal.Nome.Any(char.IsDigit));
+
+                            //Valida se é cão ou gato
+
+                            //aqui eu tive a ideia de envés de deixar o cliente digitar qualquer coisa e eu precisar fazer uma serie de validações pra impedir isso
+                            //Dei só duas opções assim só valido as duas e deixa facil a manutenção ou uma proxima atualização  
+                            byte opcaoEspecie;
+                            bool especieValida;
+
+                            do
+                            {
+                                Console.WriteLine("Qual a espécie do animal?");
+                                Console.WriteLine("1 - Cão");
+                                Console.WriteLine("2 - Gato");
+
+                                Console.WriteLine("Opcão escolhida: ");
+                                especieValida = byte.TryParse(Console.ReadLine(), out opcaoEspecie);
+
+                                if(!especieValida || (opcaoEspecie != 1 && opcaoEspecie != 2))
+                                {Console.WriteLine ("Erro: Só cadastramos cães e gatos, ecolha uma das opções disponiveis");}
+                            }while(!especieValida || (opcaoEspecie != 1 && opcaoEspecie != 2));
+
+                            if (opcaoEspecie ==1){animal.Especie = "Cão";}
+
+                            else{animal.Especie = "gato";}
+
+                        
                             
-                            Console.WriteLine("Qual a espécie do animal?");
-                            animal.Especie = Console.ReadLine()??"";
-                            
+                            //Validação da idade do animal
                             int idadeAnimal;
                             bool idadeValida;
                             
@@ -111,10 +161,10 @@ public class Program
                             //Verificação de cadastro do animal
 
                             bool animalExistente = Animais.Exists(a =>
-                            a.Nome == animal.Nome &&
-                            a.Especie == animal.Especie &&
+                            a.Nome.Trim().ToLower() == animal.Nome.Trim().ToLower() &&
+                            a.Especie.Trim().ToLower() == animal.Especie.Trim().ToLower() &&
                             a.Idade == animal.Idade &&
-                            a.NomeTutor == animal.NomeTutor &&
+                            a.NomeTutor.Trim().ToLower() == animal.NomeTutor.Trim().ToLower() &&
                             a.TelefoneTutor == animal.TelefoneTutor);
 
                             if(animalExistente)
@@ -137,19 +187,58 @@ public class Program
                         // aqui armazena tudo sobre o veterinario
                             Veterinario veterinario = new Veterinario();
 
-                            Console.WriteLine("Nome do veterinário");
-                            veterinario.Nome = Console.ReadLine()??"";
-                            
-                            Console.WriteLine("CRMV");
-                            veterinario.CRMV = (Console.ReadLine()??"").Trim();
-                            
-                            // Verificação de cadastro
-                            if (string.IsNullOrWhiteSpace(veterinario.CRMV))
+                            do
                             {
-                                Console.WriteLine("Erro: o CRMV não pode estar vazio");
-                            }
-                            else if(Veterinarios.Exists(
-                                vet => vet.CRMV.Equals( veterinario.CRMV, StringComparison.OrdinalIgnoreCase)))
+                                Console.WriteLine("Nome do veterinário");
+                                veterinario.Nome = (Console.ReadLine()??"").Trim();
+
+                                if(string.IsNullOrWhiteSpace(veterinario.Nome) || veterinario.Nome.Any(char.IsDigit)) 
+                                {Console.WriteLine("Erro: informe um nome válido, sem números");} 
+                            }    
+                            while(string.IsNullOrWhiteSpace(veterinario.Nome) || veterinario .Nome.Any(char.IsDigit));
+                            
+                            //Á ideia aqui é a mesma de mais cedo, evitar erros bobos, so que aqui faremos 2 etapas, uma ele coloca a Unidade Federal e na outra
+                            //o seu codigo CRMV assim evitando uma formatação errada e outros erros
+                            string[] estados={ "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA",
+                            "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" };
+
+                            string uf;
+                            bool ufValida;
+
+                            do
+                            { 
+                                Console.WriteLine("Digite a UF do CRMV");
+                                uf = (Console.ReadLine() ?? "").Trim().ToUpper();
+
+                                ufValida= estados.Contains(uf);
+
+                                if (!ufValida)
+                                {
+                                    Console.WriteLine("Erro: Informe uma UF brasileira válida");
+                                }
+                            }while(!ufValida);
+
+                            string numeroCRMV;
+                            bool numeroValido;
+
+                            do
+                            {
+                                Console.WriteLine("Digite o número CRMV: ");
+                                numeroCRMV = (Console.ReadLine()??"").Trim();
+                                
+                                numeroValido= numeroCRMV.Length >= 1 && numeroCRMV.Length <=6 && numeroCRMV.All(char.IsDigit);
+
+                                if(!numeroValido)
+                                {Console.WriteLine("Erro: Digite um CRMV valido com 1 ou 6 números");}
+                            
+                            }while(!numeroValido);
+
+                            veterinario.CRMV = $"{uf}-{numeroCRMV}";
+
+                            bool crmvExistente = Veterinarios.Exists(
+                                vet => vet.CRMV.Equals( veterinario.CRMV, StringComparison.OrdinalIgnoreCase));
+                            
+                            if(crmvExistente)
                             {
                                 Console.WriteLine("Erro: CRMV já cadastrado");
                             }
@@ -158,7 +247,7 @@ public class Program
                                 Veterinarios.Add(veterinario);
                                 //adicona veterinarios a lista
                                 Console.WriteLine("Veterinario cadastrado");
-                            
+                                Console.WriteLine($"CRMV: {veterinario.CRMV}");
                                 Console.WriteLine($"Total de veterinários cadastrados: {Veterinarios.Count}");
                             }
                             break;
